@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Microsoft.UI;
@@ -29,6 +30,8 @@ namespace Pixel_Art_Display_Dashboard
     public sealed partial class MainWindow : Window
     {
         private readonly Divoom divoom = new();
+        private string filePath = "";
+
         public MainWindow()
         {
             this.InitializeComponent();
@@ -37,7 +40,7 @@ namespace Pixel_Art_Display_Dashboard
             AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
 
             // Set the desired size using Resize()
-            appWindow.Resize(new SizeInt32(800, 600));
+            appWindow.Resize(new SizeInt32(500, 700));
         }
 
         private async Task ShowException(Exception ex)
@@ -46,7 +49,7 @@ namespace Pixel_Art_Display_Dashboard
             ContentDialog dialog = new()
             {
                 Title = "Error",
-                Content = $"An error occurred: {ex.Message}",
+                Content = $"{ex.Message}",
                 CloseButtonText = "OK",
                 XamlRoot = this.Content.XamlRoot
             };
@@ -65,14 +68,19 @@ namespace Pixel_Art_Display_Dashboard
                 foreach (Device device in devices)
                 {
                     if (device == null) continue;
-                    DevicesBox.Items.Add(device.DevicePrivateIP);
+                    ComboBoxItem item = new()
+                    {
+                        Content = $"{device.DeviceName} : {device.DevicePrivateIP}",
+                        Tag = device.DevicePrivateIP
+                    };
+                    DevicesBox.Items.Add(item);
                 }
                 DevicesBox.IsEnabled = true;
                 // Select the first item
                 if (DevicesBox.Items.Count > 0)
                 {
-                    DevicesBox.SelectedIndex = 0; // Select the first item (index 0)
-                    divoom.IPAddress = DevicesBox.SelectedItem.ToString();
+                    DevicesBox.SelectedIndex = 0;
+                    divoom.IPAddress = ((ComboBoxItem)DevicesBox.SelectedItem).Tag.ToString();
                 }
             }
             catch (Exception ex)
@@ -87,7 +95,7 @@ namespace Pixel_Art_Display_Dashboard
         }
         private void DevicesBox_Changed(object sender, RoutedEventArgs e)
         {
-            divoom.IPAddress = DevicesBox.SelectedItem.ToString();
+            divoom.IPAddress = ((ComboBoxItem)DevicesBox.SelectedItem).Tag.ToString();
         }
 
         private async void PickImageButton_Click(object sender, RoutedEventArgs e)
@@ -121,6 +129,7 @@ namespace Pixel_Art_Display_Dashboard
             if (file != null)
             {
                 PickImageOutputTextBlock.Text = file.Name;
+                filePath = file.Path;
                 SendImageButton.IsEnabled = true;
             }
             else
@@ -133,7 +142,23 @@ namespace Pixel_Art_Display_Dashboard
         {
             try
             {
-                await divoom.SendFile(PickImageOutputTextBlock.Text);
+                await divoom.SendImage(filePath);
+            }
+            catch (Exception ex)
+            {
+                await ShowException(ex);
+            }
+        }
+
+        private async void SendRemoteButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(RemoteURL.Text))
+                {
+                    throw new InvalidOperationException("No URL specified");
+                }
+                await divoom.SendRemoteImage(RemoteURL.Text);
             }
             catch (Exception ex)
             {

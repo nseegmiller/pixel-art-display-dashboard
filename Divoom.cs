@@ -16,7 +16,7 @@ namespace Pixel_Art_Display_Dashboard
     {
         private static readonly HttpClient client = new();
 
-        public string IPAddress { get; set; }
+        public string? IPAddress { get; set; }
 
         const string HTTP = "http://";
         const string POST = "/post";
@@ -54,13 +54,13 @@ namespace Pixel_Art_Display_Dashboard
             return SendPayload(payload);
         }
 
-        public Task SendGif(string fileName)
+        public Task SendRemoteImage(string URL)
         {
             StringContent payload = DivoomHelpers.MakePayload(new
             {
                 Command = PLAY_GIF_COMMAND,
                 FileType = 2,
-                FileName = fileName
+                FileName = URL
             });
             return SendPayload(payload);
         }
@@ -74,7 +74,7 @@ namespace Pixel_Art_Display_Dashboard
             return SendPayload(payload);
         }
 
-        public async Task<Task> SendFile(string filePath)
+        public async Task<Task> SendImage(string filePath)
         {
             await ResetPicId();
             using (Bitmap gif = new(filePath))

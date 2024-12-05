@@ -24,23 +24,34 @@
                 <Button x:Name="SearchPanels" Content="Search for panels on network" Click="SearchPanels_Click" />
             </StackPanel>
             <StackPanel Orientation="Vertical"
-                        Padding="16,16,16,16"
-                        Spacing="16"
-                        Background="{ThemeResource CardBackgroundFillColorDefault}"
-                        CornerRadius="{StaticResource OverlayCornerRadius}">
-                <TextBlock Text="Send Local File" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
-                <StackPanel Orientation="Horizontal">
-                    <Button x:Name="PickImageButton"
-                            Content="Choose image"
-                            Click="PickImageButton_Click" />
-                    <TextBlock x:Name="PickImageOutputTextBlock"
-                               TextWrapping="Wrap"
-                               Padding="24,0,0,0"
-                               VerticalAlignment="Center"/>
+                            Padding="16,16,16,16"
+                            Spacing="16"
+                            Background="{ThemeResource CardBackgroundFillColorDefault}"
+                            CornerRadius="{StaticResource OverlayCornerRadius}">
+                    <TextBlock Text="Send Local File" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="PickImageButton"
+                                Content="Choose image"
+                                Click="PickImageButton_Click" />
+                        <TextBlock x:Name="PickImageOutputTextBlock"
+                                   TextWrapping="Wrap"
+                                   Padding="24,0,0,0"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <Button x:Name="SendImageButton"
+                            Content="Send"
+                            Click="SendImageButton_Click" IsEnabled="False" />
                 </StackPanel>
-                <Button x:Name="SendImageButton"
-                        Content="Send"
-                        Click="SendImageButton_Click" IsEnabled="False" />
+            <StackPanel Orientation="Vertical"
+                            Padding="16,16,16,16"
+                            Spacing="16"
+                            Background="{ThemeResource CardBackgroundFillColorDefault}"
+                            CornerRadius="{StaticResource OverlayCornerRadius}">
+                <TextBlock Text="Send Remote File" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
+                <TextBox x:Name="RemoteURL" PlaceholderText="URL of image" />
+                <Button x:Name="SendRemoteButton"
+                            Content="Send"
+                            Click="SendRemoteButton_Click" />
             </StackPanel>
         </StackPanel>
     </StackPanel>
