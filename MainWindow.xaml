@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window 
+    x:Class="Pixel_Art_Display_Dashboard.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Pixel_Art_Display_Dashboard"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Divoom 64 Control">
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel Orientation="Vertical" Margin="36,36,36,36" Spacing="24">
+            <TextBlock Text="Divoom 64 Control" Style="{StaticResource TitleTextBlockStyle}" Margin="0,4,0,0"/>
+            <StackPanel Orientation="Vertical"
+                        Padding="16,16,16,16"
+                        Spacing="16"
+                        Background="{ThemeResource CardBackgroundFillColorDefault}"
+                        CornerRadius="{StaticResource OverlayCornerRadius}">
+                <TextBlock Text="Panel" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
+                <ComboBox x:Name="DevicesBox"
+                          PlaceholderText="IP Address"
+                          IsEnabled="False"
+                          SelectionChanged="DevicesBox_Changed" />
+                <Button x:Name="SearchPanels" Content="Search for panels on network" Click="SearchPanels_Click" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical"
+                        Padding="16,16,16,16"
+                        Spacing="16"
+                        Background="{ThemeResource CardBackgroundFillColorDefault}"
+                        CornerRadius="{StaticResource OverlayCornerRadius}">
+                <TextBlock Text="Send Local File" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="PickImageButton"
+                            Content="Choose image"
+                            Click="PickImageButton_Click" />
+                    <TextBlock x:Name="PickImageOutputTextBlock"
+                               TextWrapping="Wrap"
+                               Padding="24,0,0,0"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+                <Button x:Name="SendImageButton"
+                        Content="Send"
+                        Click="SendImageButton_Click" IsEnabled="False" />
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+</Window>

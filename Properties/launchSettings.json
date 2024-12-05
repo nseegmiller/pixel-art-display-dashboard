@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Pixel Art Display Dashboard (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Pixel Art Display Dashboard (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
