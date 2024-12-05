@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Automation.Peers;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -40,7 +42,7 @@ namespace Pixel_Art_Display_Dashboard
             AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
 
             // Set the desired size using Resize()
-            appWindow.Resize(new SizeInt32(500, 700));
+            appWindow.Resize(new SizeInt32(700, 700));
         }
 
         private async Task ShowException(Exception ex)
@@ -80,7 +82,6 @@ namespace Pixel_Art_Display_Dashboard
                 if (DevicesBox.Items.Count > 0)
                 {
                     DevicesBox.SelectedIndex = 0;
-                    divoom.IPAddress = ((ComboBoxItem)DevicesBox.SelectedItem).Tag.ToString();
                 }
             }
             catch (Exception ex)
@@ -95,14 +96,14 @@ namespace Pixel_Art_Display_Dashboard
         }
         private void DevicesBox_Changed(object sender, RoutedEventArgs e)
         {
-            divoom.IPAddress = ((ComboBoxItem)DevicesBox.SelectedItem).Tag.ToString();
+            if (DevicesBox.SelectedItem is not null && DevicesBox.SelectedItem is ComboBoxItem selectedItem)
+            {
+                divoom.IPAddress = selectedItem.Tag.ToString();
+            }
         }
 
         private async void PickImageButton_Click(object sender, RoutedEventArgs e)
         {
-            // Clear previous returned file name, if it exists, between iterations of this scenario
-            PickImageOutputTextBlock.Text = "";
-
             // Create a file picker
             var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
 
@@ -128,13 +129,9 @@ namespace Pixel_Art_Display_Dashboard
             var file = await openPicker.PickSingleFileAsync();
             if (file != null)
             {
-                PickImageOutputTextBlock.Text = file.Name;
+                SelectedImage.Source = new BitmapImage(new Uri($"ms-appx:///{file.Path}"));
                 filePath = file.Path;
                 SendImageButton.IsEnabled = true;
-            }
-            else
-            {
-                PickImageOutputTextBlock.Text = "Operation cancelled.";
             }
         }
 
@@ -159,6 +156,30 @@ namespace Pixel_Art_Display_Dashboard
                     throw new InvalidOperationException("No URL specified");
                 }
                 await divoom.SendRemoteImage(RemoteURL.Text);
+            }
+            catch (Exception ex)
+            {
+                await ShowException(ex);
+            }
+        }
+
+        private async void PlayBuzzerButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                await divoom.PlayBuzzer();
+            }
+            catch (Exception ex)
+            {
+                await ShowException(ex);
+            }
+        }
+
+        private async void RebootButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                await divoom.Reboot();
             }
             catch (Exception ex)
             {

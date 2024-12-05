@@ -26,6 +26,8 @@ namespace Pixel_Art_Display_Dashboard
         const string SEND_FILE_COMMAND = "Draw/SendHttpGif";
         const string RESET_PIC_ID = "Draw/ResetHttpGifId";
         const string GET_GIF_ID = "Draw/GetHttpGifId";
+        const string PLAY_BUZZER = "Device/PlayBuzzer";
+        const string REBOOT = "Device/SysReboot";
         
         const string GET_DEVICES_PATH = "https://app.divoom-gz.com/Device/ReturnSameLANDevice";
 
@@ -105,6 +107,27 @@ namespace Pixel_Art_Display_Dashboard
                 }
             }
             return Task.CompletedTask;
+        }
+
+        public Task PlayBuzzer()
+        {
+            StringContent payload = DivoomHelpers.MakePayload(new
+            {
+                Command = PLAY_BUZZER,
+                ActiveTimeInCycle = 500,
+                OffTimeInCycle = 500,
+                PlayTotalTime = 3000
+            });
+            return SendPayload(payload);
+        }
+
+        public Task Reboot()
+        {
+            StringContent payload = DivoomHelpers.MakePayload(new
+            {
+                Command = REBOOT
+            });
+            return SendPayload(payload);
         }
     }
 }

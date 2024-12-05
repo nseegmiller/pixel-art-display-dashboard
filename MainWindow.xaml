@@ -11,47 +11,59 @@
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel Orientation="Vertical" Margin="36,36,36,36" Spacing="24">
             <TextBlock Text="Divoom 64 Control" Style="{StaticResource TitleTextBlockStyle}" Margin="0,4,0,0"/>
-            <StackPanel Orientation="Vertical"
-                        Padding="16,16,16,16"
-                        Spacing="16"
-                        Background="{ThemeResource CardBackgroundFillColorDefault}"
-                        CornerRadius="{StaticResource OverlayCornerRadius}">
-                <TextBlock Text="Panel" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
-                <ComboBox x:Name="DevicesBox"
-                          PlaceholderText="IP Address"
-                          IsEnabled="False"
-                          SelectionChanged="DevicesBox_Changed" />
-                <Button x:Name="SearchPanels" Content="Search for panels on network" Click="SearchPanels_Click" />
-            </StackPanel>
-            <StackPanel Orientation="Vertical"
-                            Padding="16,16,16,16"
-                            Spacing="16"
-                            Background="{ThemeResource CardBackgroundFillColorDefault}"
-                            CornerRadius="{StaticResource OverlayCornerRadius}">
-                    <TextBlock Text="Send Local File" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
-                    <StackPanel Orientation="Horizontal">
-                        <Button x:Name="PickImageButton"
-                                Content="Choose image"
-                                Click="PickImageButton_Click" />
-                        <TextBlock x:Name="PickImageOutputTextBlock"
-                                   TextWrapping="Wrap"
-                                   Padding="24,0,0,0"
-                                   VerticalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" Spacing="16">
+                <StackPanel Orientation="Vertical" Spacing="16">
+                    <StackPanel Orientation="Vertical"
+                                Padding="16,16,16,16"
+                                Spacing="16"
+                                Background="{ThemeResource CardBackgroundFillColorDefault}"
+                                CornerRadius="{StaticResource OverlayCornerRadius}">
+                        <TextBlock Text="Panel" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
+                        <ComboBox x:Name="DevicesBox"
+                                  PlaceholderText="IP Address"
+                                  IsEnabled="False"
+                                  SelectionChanged="DevicesBox_Changed" />
+                        <Button x:Name="SearchPanels" Content="Search for panels on network" Click="SearchPanels_Click" />
                     </StackPanel>
-                    <Button x:Name="SendImageButton"
-                            Content="Send"
-                            Click="SendImageButton_Click" IsEnabled="False" />
+                    <StackPanel Orientation="Vertical"
+                                    Padding="16,16,16,16"
+                                    Spacing="16"
+                                    Background="{ThemeResource CardBackgroundFillColorDefault}"
+                                    CornerRadius="{StaticResource OverlayCornerRadius}">
+                            <TextBlock Text="Send Local File" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
+                            <StackPanel Orientation="Horizontal" Spacing="16">
+                                <Button x:Name="PickImageButton"
+                                        Content="Choose image"
+                                        Click="PickImageButton_Click" />
+                            <Image x:Name="SelectedImage" Width="64" Height="64" />
+                        </StackPanel>
+                            <Button x:Name="SendImageButton"
+                                    Content="Send"
+                                    Click="SendImageButton_Click" IsEnabled="False" />
+                        </StackPanel>
+                    <StackPanel Orientation="Vertical"
+                                    Padding="16,16,16,16"
+                                    Spacing="16"
+                                    Background="{ThemeResource CardBackgroundFillColorDefault}"
+                                    CornerRadius="{StaticResource OverlayCornerRadius}">
+                        <TextBlock Text="Send Remote File" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
+                        <TextBox x:Name="RemoteURL" PlaceholderText="URL of image" />
+                        <Button x:Name="SendRemoteButton"
+                                    Content="Send"
+                                    Click="SendRemoteButton_Click" />
+                    </StackPanel>
                 </StackPanel>
-            <StackPanel Orientation="Vertical"
-                            Padding="16,16,16,16"
-                            Spacing="16"
-                            Background="{ThemeResource CardBackgroundFillColorDefault}"
-                            CornerRadius="{StaticResource OverlayCornerRadius}">
-                <TextBlock Text="Send Remote File" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
-                <TextBox x:Name="RemoteURL" PlaceholderText="URL of image" />
-                <Button x:Name="SendRemoteButton"
-                            Content="Send"
-                            Click="SendRemoteButton_Click" />
+                <StackPanel Orientation="Vertical" Spacing="16">
+                    <StackPanel Orientation="Vertical"
+                                Padding="16,16,16,16"
+                                Spacing="16"
+                                Background="{ThemeResource CardBackgroundFillColorDefault}"
+                                CornerRadius="{StaticResource OverlayCornerRadius}">
+                        <TextBlock Text="Misc Controls" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
+                        <Button x:Name="PlayBuzzerButton" Content="Play Buzzer" Click="PlayBuzzerButton_Click" />
+                        <Button x:Name="RebootButton" Content="Reboot Panel" Click="RebootButton_Click" />
+                    </StackPanel>
+                </StackPanel>
             </StackPanel>
         </StackPanel>
     </StackPanel>
